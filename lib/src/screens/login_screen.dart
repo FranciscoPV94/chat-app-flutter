@@ -1,4 +1,5 @@
 import 'package:chat_app/src/services/auth_service.dart';
+import 'package:chat_app/src/services/socket_service.dart';
 import 'package:chat_app/src/widgets/custom_boton.dart';
 import 'package:chat_app/src/widgets/custom_input.dart';
 import 'package:flutter/material.dart';
@@ -84,6 +85,7 @@ class __FormState extends State<_Form> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
 
     return Container(
       margin: EdgeInsets.only(top: 20),
@@ -114,6 +116,7 @@ class __FormState extends State<_Form> {
                     final loginOk = await authService.login(
                         emailCtrl.text.trim(), passCtrl.text.trim());
                     if (loginOk) {
+                      socketService.initConnect();
                       Navigator.pushReplacementNamed(context, 'usuarios');
                     } else {}
                   },
